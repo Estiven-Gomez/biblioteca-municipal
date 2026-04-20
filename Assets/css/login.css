@@ -1,0 +1,77 @@
+/* Custom styles for login page */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap');
+
+/* Background image for entire login section */
+body {
+    background-image: url('../img/login-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-content {
+    background-image: url('../img/login-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Make login box transparent */
+.login-content .login-box {
+    background-color: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(5px);
+    font-family: 'Poppins', sans-serif;
+    border-radius: 20px;
+}
+
+/* Change login header color and font */
+.login-content .login-box .login-head {
+    color: #003366;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Change welcome title color for better contrast */
+.login-content .logo h1 {
+    color: #4da6ff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Change labels color and font */
+.login-content .login-box label {
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Optionally modify the button appearance */
+.login-content .login-box .btn-primary {
+    background-color: #0055aa;
+    border-color: #0055aa;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.login-content .login-box .btn-primary:hover {
+    background-color: #003d7a;
+    border-color: #003d7a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 85, 170, 0.3);
+}
+
+/* Style inputs more friendly */
+.login-content .login-box .form-control {
+    font-family: 'Poppins', sans-serif;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
