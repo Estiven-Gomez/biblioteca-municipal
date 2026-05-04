@@ -27,6 +27,18 @@ Permite a los administradores de una biblioteca registrar y controlar el inventa
 
 ---
 
+##  Configuración
+
+1. **Clona el repositorio** (ver sección Instalación)
+2. **Configura la base de datos:**
+   - Renombra `Config/Config.example.php` a `Config/Config.php`
+   - Edita `Config/Config.php` con tus credenciales reales
+3. **Importa la base de datos** (ver Instalación)
+
+**Nota:** `Config/Config.php` está excluido de Git por seguridad. Usa `Config.example.php` como plantilla.
+
+---
+
 ##  Instalación y ejecución
 
 ### 1. Clona el repositorio

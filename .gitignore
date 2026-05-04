@@ -1,0 +1,48 @@
+# Archivos y carpetas a ignorar en Git para proyecto PHP/MySQL
+
+# Dependencias de Composer
+vendor/
+
+# Archivos de configuración sensibles
+Config/Config.php
+
+# Archivos de entorno
+.env
+.env.local
+.env.production
+
+# Logs y archivos temporales
+logs/
+*.log
+tmp/
+temp/
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node.js (si se usa para assets)
+node_modules/
+npm-debug.log*
+
+# Archivos de backup y temporales
+*.bak
+*.tmp
+*.old
+
+# Archivos de base de datos (opcional, si no quieres versionar dumps)
+*.sql
+!biblioteca.sql  # Exceptuar el dump inicial si es necesario
+
+# Archivos de cache
+cache/
+*.cache
+
+# Archivos de sesión (si se almacenan en archivos)
+session/

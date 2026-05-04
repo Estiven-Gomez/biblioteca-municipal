@@ -29,3 +29,19 @@ function strClean($cadena)
     $string = str_ireplace('==', '', $string);
     return $string;
 }
+
+function generate_csrf_token() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function validate_csrf_token($token) {
+    if (!empty($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token)) {
+        // Regenerar token después de validación exitosa para permitir múltiples envíos
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        return true;
+    }
+    return false;
+}

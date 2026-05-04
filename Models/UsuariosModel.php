@@ -7,9 +7,13 @@ class UsuariosModel extends Query{
     }
     public function getUsuario($usuario, $clave)
     {
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND clave = '$clave' AND estado = 1";
-        $data = $this->select($sql);
-        return $data;
+        $sql = "SELECT * FROM usuarios WHERE usuario = ? AND estado = 1";
+        $datos = array($usuario);
+        $data = $this->select($sql, $datos);
+        if ($data && password_verify($clave, $data['clave'])) {
+            return $data;
+        }
+        return null;
     }
     public function getUsuarios()
     {
@@ -22,8 +26,8 @@ class UsuariosModel extends Query{
         $this->usuario = $usuario;
         $this->nombre = $nombre;
         $this->clave = $clave;
-        $vericar = "SELECT * FROM usuarios WHERE usuario = '$this->usuario'";
-        $existe = $this->select($vericar);
+        $vericar = "SELECT * FROM usuarios WHERE usuario = ?";
+        $existe = $this->select($vericar, array($this->usuario));
         if (empty($existe)) {
             # code...
             $sql = "INSERT INTO usuarios(usuario, nombre, clave) VALUES (?,?,?)";
@@ -56,8 +60,9 @@ class UsuariosModel extends Query{
     }
     public function editarUser($id)
     {
-        $sql = "SELECT * FROM usuarios WHERE id = $id";
-        $data = $this->select($sql);
+        $sql = "SELECT * FROM usuarios WHERE id = ?";
+        $datos = array($id);
+        $data = $this->select($sql, $datos);
         return $data;
     }
     public function accionUser($estado, $id)
@@ -77,8 +82,9 @@ class UsuariosModel extends Query{
     }
     public function getDetallePermisos($id)
     {
-        $sql = "SELECT * FROM detalle_permisos WHERE id_usuario = $id";
-        $data = $this->selectAll($sql);
+        $sql = "SELECT * FROM detalle_permisos WHERE id_usuario = ?";
+        $datos = array($id);
+        $data = $this->selectAll($sql, $datos);
         return $data;
     }
     public function deletePermisos($id)
@@ -103,8 +109,9 @@ class UsuariosModel extends Query{
     public function verificarPermisos($id_user, $permiso)
     {
         $tiene = false;
-        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'";
-        $existe = $this->select($sql);
+        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = ? AND p.nombre = ?";
+        $datos = array($id_user, $permiso);
+        $existe = $this->select($sql, $datos);
         if ($existe != null || $existe != "") {
             $tiene = true;
         }

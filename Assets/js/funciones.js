@@ -399,6 +399,16 @@ function frmUsuario() {
     document.getElementById("claves").classList.remove("d-none");
     document.getElementById("frmUsuario").reset();
     document.getElementById("id").value = "";
+    // Obtener nuevo token CSRF
+    const http = new XMLHttpRequest();
+    http.open("GET", base_url + "Usuarios/getCsrfToken", true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            document.querySelector("input[name='csrf_token']").value = res.token;
+        }
+    };
     $("#nuevo_usuario").modal("show");
 }
 function registrarUser(e) {

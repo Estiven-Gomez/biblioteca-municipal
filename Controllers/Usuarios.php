@@ -57,8 +57,7 @@ class Usuarios extends Controller{
         if (empty($usuario) || empty($clave)) {
             $msg = array('msg' => 'Todo los campos son requeridos', 'icono' => 'warning');
         }else{
-            $hash = hash("SHA256", $clave);
-            $data = $this->model->getUsuario($usuario, $hash);
+            $data = $this->model->getUsuario($usuario, $clave);
             if ($data) {
                 $_SESSION['id_usuario'] = $data['id'];
                 $_SESSION['usuario'] = $data['usuario'];
@@ -79,7 +78,13 @@ class Usuarios extends Controller{
         $clave = strClean($_POST['clave']);
         $confirmar = strClean($_POST['confirmar']);
         $id = strClean($_POST['id']);
-        $hash = hash("SHA256", $clave);
+        $csrf_token = $_POST['csrf_token'];
+        if (!validate_csrf_token($csrf_token)) {
+            $msg = array('msg' => 'Token CSRF inválido', 'icono' => 'error');
+            echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+            die();
+        }
+        $hash = password_hash($clave, PASSWORD_BCRYPT);
         if (empty($usuario) || empty($nombre)) {
             $msg = array('msg' => 'Todo los campos son requeridos', 'icono' => 'warning');
         }else{
@@ -196,8 +201,8 @@ class Usuarios extends Controller{
             $id = $_SESSION['id_usuario'];
             $clave = strClean($_POST['clave_actual']);
             $user = $this->model->editarUser($id);
-            if (hash("SHA256", $clave) == $user['clave']) {
-                $hash = hash("SHA256", strClean($_POST['clave_nueva']));
+            if (password_verify($clave, $user['clave'])) {
+                $hash = password_hash(strClean($_POST['clave_nueva']), PASSWORD_BCRYPT);
                 $data = $this->model->actualizarPass($hash, $id);
                 if ($data == "modificado") {
                     $msg = array('msg' => 'Contraseña modificado', 'icono' => 'success');
@@ -215,5 +220,10 @@ class Usuarios extends Controller{
     {
         session_destroy();
         header("location: ".base_url);
+    }
+    public function getCsrfToken()
+    {
+        echo json_encode(['token' => generate_csrf_token()]);
+        die();
     }
 }

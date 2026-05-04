@@ -62,6 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="csrf_token" value="<?php echo generate_csrf_token(); ?>">
                                     <button class="btn btn-primary" type="button" onclick="registrarUser(event);" id="btnAccion">Registrar</button>
                                     <button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
                                 </form>

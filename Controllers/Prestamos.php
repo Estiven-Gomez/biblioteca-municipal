@@ -86,7 +86,10 @@ class Prestamos extends Controller
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(195, 5, utf8_decode($datos['nombre']), 0, 1, 'C');
 
-        $pdf->Image(base_url. "Assets/img/logo.png", 180, 10, 30, 30, 'PNG');
+        $logoPath = $_SERVER['DOCUMENT_ROOT'] . "/biblioteca/Assets/img/logo.png";
+        if (file_exists($logoPath)) {
+            $pdf->Image($logoPath, 180, 10, 30, 30, 'PNG');
+        }
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(20, 5, utf8_decode("Teléfono: "), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
@@ -137,7 +140,10 @@ class Prestamos extends Controller
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(40,5,$row['titulo'],0,1,'L');
 
-        $pdf->Image("C:/xampp/htdocs/biblioteca/Assets/img/logo.png", 55, 15, 20, 20, 'PNG');
+        $logoPath = $_SERVER['DOCUMENT_ROOT'] . "/biblioteca/Assets/img/logo.png";
+        if (file_exists($logoPath)) {
+            $pdf->Image($logoPath, 55, 15, 20, 20, 'PNG');
+        }
         $pdf->SetFont('Arial', 'B', 8);
         $pdf->Cell(15, 5, utf8_decode("Teléfono: "), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 8);
