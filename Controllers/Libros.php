@@ -3,7 +3,9 @@ class Libros extends Controller
 {
     public function __construct()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (empty($_SESSION['activo'])) {
             header("location: " . base_url);
         }
@@ -22,22 +24,31 @@ class Libros extends Controller
     public function listar()
     {
         $data = $this->model->getLibros();
+        $id_user = $_SESSION['id_usuario'];
         for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['foto'] = '<img class="img-thumbnail" src="' . base_url . "Assets/img/libros/" . $data[$i]['imagen'] . '" width="100">';
-            if ($data[$i]['estado'] == 1) {
-                $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                $data[$i]['acciones'] = '<div class="d-flex">
-                <button class="btn btn-primary" type="button" onclick="btnEditarLibro(' . $data[$i]['id'] . ');"><i class="fa fa-pencil-square-o"></i></button>
-                <button class="btn btn-danger" type="button" onclick="btnEliminarLibro(' . $data[$i]['id'] . ');"><i class="fa fa-trash-o"></i></button>
-                <div/>';
+            $img_src = base_url . "Assets/img/libros/" . $data[$i]['imagen'];
+            $data[$i]['foto'] = '<img class="img-thumbnail" src="' . $img_src . '" width="100">';
+            
+            $id = $data[$i]['id'];
+            if ($id_user == 1) {
+                if ($data[$i]['estado'] == 1) {
+                    $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+                    $data[$i]['acciones'] = '<button class="btn btn-primary btn-sm" onclick="btnEditarLibro(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarLibro(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
+                } else {
+                    $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
+                    $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarLibro(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
+                }
             } else {
-                $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-                $data[$i]['acciones'] = '<div>
-                <button class="btn btn-success" type="button" onclick="btnReingresarLibro(' . $data[$i]['id'] . ');"><i class="fa fa-reply-all"></i></button>
-                <div/>';
+                if ($data[$i]['estado'] == 1) {
+                    $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+                } else {
+                    $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
+                }
+                $data[$i]['acciones'] = '';
             }
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT);
         die();
     }
     public function registrar()
@@ -71,7 +82,7 @@ class Libros extends Controller
             } else if (!empty($_POST['foto_actual']) && empty($name)) {
                 $imgNombre = $_POST['foto_actual'];
             } else {
-                $imgNombre = "logo.png";
+                $imgNombre = "";
             }
             if ($id == "") {
                 $data = $this->model->insertarLibros($titulo, $autor, $editorial, $materia, $cantidad, $num_pagina, $anio_edicion, $descripcion, $imgNombre);

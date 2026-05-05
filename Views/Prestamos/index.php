@@ -46,6 +46,7 @@
                         </select>
                     </div>
                     <div class="row">
+                        <?php if (isset($_SESSION['id_usuario']) && $_SESSION['id_usuario'] == 1) { ?>
                         <div class="col-md-9">
                             <div class="form-group">
                                 <label for="estudiante">Estudiante</label><br>
@@ -54,6 +55,7 @@
                                 </select>
                             </div>
                         </div>
+                        <?php } ?>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="cantidad">Cant</label>

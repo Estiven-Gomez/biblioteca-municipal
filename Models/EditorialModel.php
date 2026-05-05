@@ -13,8 +13,8 @@ class EditorialModel extends Query
     }
     public function insertarEditorial($editorial)
     {
-        $verificar = "SELECT * FROM editorial WHERE editorial = '$editorial'";
-        $existe = $this->select($verificar);
+        $verificar = "SELECT * FROM editorial WHERE editorial = ?";
+        $existe = $this->select($verificar, array($editorial));
         if (empty($existe)) {
             $query = "INSERT INTO editorial(editorial) VALUES (?)";
             $datos = array($editorial);
@@ -31,8 +31,8 @@ class EditorialModel extends Query
     }
     public function editEditorial($id)
     {
-        $sql = "SELECT * FROM editorial WHERE id = $id";
-        $res = $this->select($sql);
+        $sql = "SELECT * FROM editorial WHERE id = ?";
+        $res = $this->select($sql, array($id));
         return $res;
     }
     public function actualizarEditorial($editorial, $id)
@@ -57,8 +57,8 @@ class EditorialModel extends Query
     public function verificarPermisos($id_user, $permiso)
     {
         $tiene = false;
-        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'";
-        $existe = $this->select($sql);
+        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = ? AND p.nombre = ?";
+        $existe = $this->select($sql, array($id_user, $permiso));
         if ($existe != null || $existe != "") {
             $tiene = true;
         }
@@ -66,8 +66,9 @@ class EditorialModel extends Query
     }
     public function buscarEditorial($valor)
     {
-        $sql = "SELECT id, editorial AS text FROM editorial WHERE editorial LIKE '%" . $valor . "%'  AND estado = 1 LIMIT 10";
-        $data = $this->selectAll($sql);
+        $sql = "SELECT id, editorial AS text FROM editorial WHERE editorial LIKE ?  AND estado = 1 LIMIT 10";
+        $datos = array('%'.$valor.'%');
+        $data = $this->selectAll($sql, $datos);
         return $data;
     }
 }

@@ -26,28 +26,22 @@ class Usuarios extends Controller{
         }
         $data = $this->model->getUsuarios();
         for ($i=0; $i < count($data); $i++) { 
+            $id = $data[$i]['id'];
             if ($data[$i]['estado'] == 1) {
-                if ($data[$i]['id'] != 1) {
+                if ($id != 1) {
                     $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                    $data[$i]['acciones'] = '<div>
-                    <button class="btn btn-dark" onclick="btnRolesUser(' . $data[$i]['id'] . ')"><i class="fa fa-key"></i></button>
-                    <button class="btn btn-primary" type="button" onclick="btnEditarUser(' . $data[$i]['id'] . ');"><i class="fa fa-pencil-square-o"></i></button>
-                    <button class="btn btn-danger" type="button" onclick="btnEliminarUser(' . $data[$i]['id'] . ');"><i class="fa fa-trash-o"></i></button>
-                    <div/>';
-                }else{
+                    $data[$i]['acciones'] = '<button class="btn btn-dark btn-sm" onclick="btnRolesUser(' . $id . ')"><i class="fa fa-key"></i></button> <button class="btn btn-primary btn-sm" onclick="btnEditarUser(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarUser(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
+                } else {
                     $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                    $data[$i]['acciones'] = '<div class"text-center">
-                    <span class="badge-primary p-1 rounded">Super Administrador</span>
-                    </div>'; 
+                    $data[$i]['acciones'] = '<span class="badge badge-primary p-1">Super Administrador</span>'; 
                 }
-            }else {
+            } else {
                 $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-                $data[$i]['acciones'] = '<div>
-                <button class="btn btn-success" type="button" onclick="btnReingresarUser(' . $data[$i]['id'] . ');"><i class="fa fa-reply-all"></i></button>
-                <div/>';
+                $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarUser(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
             }
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT);
         die();
     }
     public function validar()
@@ -85,6 +79,9 @@ class Usuarios extends Controller{
             die();
         }
         $hash = password_hash($clave, PASSWORD_BCRYPT);
+        // Capturar rol si el form lo envía, si no es admin normal u otro
+        $rol = isset($_POST['rol_registro']) ? strClean($_POST['rol_registro']) : 'Lector';
+
         if (empty($usuario) || empty($nombre)) {
             $msg = array('msg' => 'Todo los campos son requeridos', 'icono' => 'warning');
         }else{
@@ -93,7 +90,7 @@ class Usuarios extends Controller{
                     if ($clave != $confirmar) {
                         $msg = array('msg' => 'La contraseña es requerido', 'icono' => 'warning');
                     } else {
-                        $data = $this->model->registrarUsuario($usuario, $nombre, $hash);
+                        $data = $this->model->registrarUsuario($usuario, $nombre, $hash, $rol);
                         if ($data == "ok") {
                             $msg = array('msg' => 'Usuario registrado', 'icono' => 'success');
                         } else if ($data == "existe") {

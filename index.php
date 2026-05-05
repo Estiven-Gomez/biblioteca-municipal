@@ -1,13 +1,14 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ob_start();
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once "Config/Config.php";
-require_once "Config/Helpers.php";
+require_once __DIR__ . "/Config/Config.php";
+require_once __DIR__ . "/Config/Helpers.php";
 
 $ruta = !empty($_GET['url']) ? $_GET['url'] : "Home/index";
 $array = explode("/", $ruta);
@@ -20,6 +21,7 @@ if (!empty($array[1])) {
         $metodo = $array[1];
     }
 }
+
 
 if (!empty($array[2])) {
     if (!empty($array[2] != "")) {
@@ -46,3 +48,4 @@ if (file_exists($dirControllers)) {
 } else {
     header('Location:' . base_url . 'Configuracion/Error');
 }
+ob_end_flush();

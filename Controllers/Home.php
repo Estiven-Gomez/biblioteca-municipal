@@ -3,9 +3,9 @@ class Home extends Controller
 {
     public function __construct() {
        
-        if (!empty($_SESSION['activo'])) {
-            header("location: ".base_url. "Usuarios");
-        }
+        // if (!empty($_SESSION['activo'])) {
+        //     header("location: ".base_url. "Usuarios");
+        // }
         parent::__construct();
     }
     public function index()

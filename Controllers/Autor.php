@@ -3,7 +3,9 @@ class Autor extends Controller
 {
     public function __construct()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (empty($_SESSION['activo'])) {
             header("location: " . base_url);
         }
@@ -23,21 +25,20 @@ class Autor extends Controller
     {
         $data = $this->model->getAutor();
         for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['imagen'] = '<img class="img-thumbnail" src="' . base_url . "Assets/img/autor/" . $data[$i]['imagen'] . '" width="80">';
+            $img_src = base_url . "Assets/img/autor/" . $data[$i]['imagen'];
+            $data[$i]['imagen'] = '<img class="img-thumbnail" src="' . $img_src . '" width="80">';
+            
+            $id = $data[$i]['id'];
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                $data[$i]['acciones'] = '<div>
-                <button class="btn btn-primary" type="button" onclick="btnEditarAutor(' . $data[$i]['id'] . ');"><i class="fa fa-pencil-square-o"></i></button>
-                <button class="btn btn-danger" type="button" onclick="btnEliminarAutor(' . $data[$i]['id'] . ');"><i class="fa fa-trash-o"></i></button>
-                <div/>';
+                $data[$i]['acciones'] = '<button class="btn btn-primary btn-sm" onclick="btnEditarAutor(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarAutor(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
             } else {
                 $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-                $data[$i]['acciones'] = '<div>
-                <button class="btn btn-success" type="button" onclick="btnReingresarAutor(' . $data[$i]['id'] . ');"><i class="fa fa-reply-all"></i></button>
-                <div/>';
+                $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarAutor(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
             }
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT);
         die();
     }
     public function registrar()
@@ -64,7 +65,7 @@ class Autor extends Controller
             } else if (!empty($_POST['foto_actual']) && empty($name)) {
                 $imgNombre = $_POST['foto_actual'];
             } else {
-                $imgNombre = "logo.png";
+                $imgNombre = "";
             }
             if ($id == "") {
                 $data = $this->model->insertarAutor($autor, $imgNombre);

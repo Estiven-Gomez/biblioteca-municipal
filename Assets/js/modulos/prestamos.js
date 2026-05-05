@@ -60,18 +60,30 @@ function initTablaPrestamos() {
             dataSrc: ''
         },
         columns: [
-            {'data': 'id'},
-            {'data': 'estudiante'},
-            {'data': 'libro'},
-            {'data': 'cantidad'},
+            {
+                'data': null,
+                'render': function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {'data': 'titulo'},
+            {'data': 'nombre'},
             {'data': 'fecha_prestamo'},
             {'data': 'fecha_devolucion'},
+            {'data': 'cantidad'},
+            {'data': 'observacion'},
+            {'data': 'estado'},
             {'data': 'acciones'}
         ],
+        columnDefs: [{
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        }],
         responsive: true,
         bDestroy: true,
         iDisplayLength: 10,
-        order: [[0, "desc"]],
+        order: [[1, "asc"]], // Ordenar por titulo
         language,
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -86,32 +98,32 @@ function initTablaPrestamos() {
 function frmPrestar() {
     document.getElementById("title").textContent = "Nuevo Préstamo";
     document.getElementById("btnAccion").textContent = "Registrar";
-    document.getElementById("frmPrestamo").reset();
-    document.getElementById("id").value = "";
-    $("#nuevoPrestamo").modal("show");
+    document.getElementById("frmPrestar").reset();
+    $("#prestar").modal("show");
 }
 
 /**
  * Registrar préstamo
  */
-function registrarPrestamo(e) {
+function registroPrestamos(e) {
     e.preventDefault();
     const estudiante = document.getElementById("estudiante");
     const libro = document.getElementById("libro");
     const cantidad = document.getElementById("cantidad");
     
-    if (estudiante.value == "" || libro.value == "" || cantidad.value == "") {
+    let estVal = estudiante ? estudiante.value : 'self';
+    if (estVal == "" || libro.value == "" || cantidad.value == "") {
         alertas('Todos los campos son requeridos', 'warning');
     } else {
         const url = base_url + "Prestamos/registrar";
-        const frm = document.getElementById("frmPrestamo");
+        const frm = document.getElementById("frmPrestar");
         const http = new XMLHttpRequest();
         http.open("POST", url, true);
         http.send(new FormData(frm));
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 const res = JSON.parse(this.responseText);
-                $("#nuevoPrestamo").modal("hide");
+                $("#prestar").modal("hide");
                 frm.reset();
                 tblPrestar.ajax.reload();
                 alertas(res.msg, res.icono);

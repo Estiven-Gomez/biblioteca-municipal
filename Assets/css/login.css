@@ -24,6 +24,21 @@ body {
     backdrop-filter: blur(5px);
     font-family: 'Poppins', sans-serif;
     border-radius: 20px;
+    width: 350px !important;
+    min-height: 430px !important;
+    padding-bottom: 30px;
+    transition: all 0.4s ease-in-out;
+}
+
+.login-content .login-box.flipped {
+    width: 550px !important;
+    min-height: 400px !important;
+}
+
+@media (max-width: 600px) {
+    .login-content .login-box, .login-content .login-box.flipped {
+        width: 90% !important;
+    }
 }
 
 /* Change login header color and font */

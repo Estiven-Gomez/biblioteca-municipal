@@ -4,7 +4,9 @@
         <h1><i class="fa fa-dashboard"></i> Libros</h1>
     </div>
 </div>
+<?php if($_SESSION['id_usuario'] == 1) { ?>
 <button class="btn btn-primary mb-2" onclick="frmLibros()"><i class="fa fa-plus"></i></button>
+<?php } ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="tile">
@@ -19,7 +21,7 @@
                                 <th>Autor</th>
                                 <th>Editorial</th>
                                 <th>Materia</th>
-                                <th>Foto</th>
+                                <th class="d-none">Foto</th>
                                 <th>Descripción</th>
                                 <th>Estado</th>
                                 <th></th>

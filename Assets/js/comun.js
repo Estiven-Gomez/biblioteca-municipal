@@ -5,7 +5,6 @@
  */
 
 // Variables globales de tablas (inicializadas en módulos)
-let tblUsuarios, tblEst, tblMateria, tblAutor, tblEditorial, tblLibros, tblPrestar;
 
 /**
  * Mostrar alertas personalizadas con SweetAlert2
@@ -177,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function(){
     // Verificar préstamos pendientes (notificaciones)
     if (document.getElementById('nombre_estudiante')) {
         const http = new XMLHttpRequest();
-        const url = base_url + 'Configuracion/verificar';
+        const url = base_url + 'Prestamos/verificar';
         http.open("GET", url);
         http.send();
         http.onreadystatechange = function () {

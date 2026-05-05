@@ -13,8 +13,8 @@ class LibrosModel extends Query
     }
     public function insertarLibros($titulo,$id_autor,$id_editorial,$id_materia,$cantidad,$num_pagina,$anio_edicion,$descripcion,$imgNombre)
     {
-        $verificar = "SELECT * FROM libro WHERE titulo = '$titulo'";
-        $existe = $this->select($verificar);
+        $verificar = "SELECT * FROM libro WHERE titulo = ?";
+        $existe = $this->select($verificar, array($titulo));
         if (empty($existe)) {
             $query = "INSERT INTO libro(titulo, id_autor, id_editorial, id_materia, cantidad, num_pagina, anio_edicion, descripcion, imagen) VALUES (?,?,?,?,?,?,?,?,?)";
             $datos = array($titulo, $id_autor, $id_editorial, $id_materia, $cantidad, $num_pagina, $anio_edicion, $descripcion, $imgNombre);
@@ -31,8 +31,8 @@ class LibrosModel extends Query
     }
     public function editLibros($id)
     {
-        $sql = "SELECT * FROM libro WHERE id = $id";
-        $res = $this->select($sql);
+        $sql = "SELECT * FROM libro WHERE id = ?";
+        $res = $this->select($sql, array($id));
         return $res;
     }
     public function actualizarLibros($titulo, $id_autor, $id_editorial, $id_materia, $cantidad, $num_pagina, $anio_edicion, $descripcion, $imgNombre, $id)
@@ -56,15 +56,16 @@ class LibrosModel extends Query
     }
     public function buscarLibro($valor)
     {
-        $sql = "SELECT id, titulo AS text FROM libro WHERE titulo LIKE '%" . $valor . "%' AND estado = 1 LIMIT 10";
-        $data = $this->selectAll($sql);
+        $sql = "SELECT id, titulo AS text FROM libro WHERE titulo LIKE ? AND estado = 1 LIMIT 10";
+        $datos = array('%'.$valor.'%');
+        $data = $this->selectAll($sql, $datos);
         return $data;
     }
     public function verificarPermisos($id_user, $permiso)
     {
         $tiene = false;
-        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'";
-        $existe = $this->select($sql);
+        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = ? AND p.nombre = ?";
+        $existe = $this->select($sql, array($id_user, $permiso));
         if ($existe != null || $existe != "") {
             $tiene = true;
         }

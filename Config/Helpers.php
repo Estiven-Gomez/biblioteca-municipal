@@ -27,6 +27,7 @@ function strClean($cadena)
     $string = str_ireplace('[', '', $string);
     $string = str_ireplace(']', '', $string);
     $string = str_ireplace('==', '', $string);
+    $string = htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     return $string;
 }
 

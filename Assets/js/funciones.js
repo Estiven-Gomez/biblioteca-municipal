@@ -1,9 +1,11 @@
-let tblUsuarios, tblEst, tblMateria, tblAutor, tblEditorial, tblLibros, tblPrestar;
 document.addEventListener("DOMContentLoaded", function(){
-    document.querySelector("#modalPass").addEventListener("click", function () {
-        document.querySelector('#frmCambiarPass').reset();
-        $('#cambiarClave').modal('show');
-    });
+    const modalPassBtn = document.querySelector("#modalPass");
+    if (modalPassBtn) {
+        modalPassBtn.addEventListener("click", function () {
+            document.querySelector('#frmCambiarPass').reset();
+            $('#cambiarClave').modal('show');
+        });
+    }
     const language = {
         "decimal": "",
         "emptyTable": "No hay información",
@@ -25,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(){
         }
 
     }
-    const  buttons = [{
+    const buttons = [{
                 //Botón para Excel
                 extend: 'excel',
                 footer: true,
@@ -52,221 +54,10 @@ document.addEventListener("DOMContentLoaded", function(){
                 text: '<button class="btn btn-info"><i class="fa fa-print"></i></button>'
             }
         ]
-            
-    tblUsuarios = $('#tblUsuarios').DataTable({
-        ajax: {
-            url: base_url + "Usuarios/listar",
-            dataSrc: ''
-        },
-        columns: [
-            {'data' : 'id'},
-            {'data': 'usuario'},
-            {'data': 'nombre'},
-            {'data': 'estado'},
-            {'data': 'acciones'}
-        ],
-        responsive: true,
-        bDestroy: true,
-        iDisplayLength: 10,
-        order: [
-            [0, "desc"]
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        buttons
-    });
-    //Fin de la tabla usuarios
-    tblEst = $('#tblEst').DataTable({
-        ajax: {
-            url: base_url + "Estudiantes/listar",
-            dataSrc: ''
-        },
-        columns: [{'data': 'id'},
-            {'data': 'codigo'},
-            {'data': 'dni'},
-            {'data': 'nombre'},
-            {'data':'carrera'},
-            {'data': 'direccion'},
-            {'data': 'telefono'},
-            {'data': 'estado'},
-            {'data': 'acciones'}
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            buttons
-    });
-    //Fin de la tabla Estudiantes
-    tblMateria = $('#tblMateria').DataTable({
-        ajax: {
-            url: base_url + "Materia/listar",
-            dataSrc: ''
-        },
-        columns: [{
-                'data': 'id'
-            },
-            {
-                'data': 'materia'
-            },
-            {
-                'data': 'estado'
-            },
-            {
-                'data': 'acciones'
-            }
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        buttons
-    });
-    //Fin de la tabla Materias
-    tblAutor = $('#tblAutor').DataTable({
-        ajax: {
-            url: base_url + "Autor/listar",
-            dataSrc: ''
-        },
-        columns: [{
-                'data': 'id'
-            },
-            {
-                'data': 'imagen'
-            },
-            {
-                'data': 'autor'
-            },
-            {
-                'data': 'estado'
-            },
-            {
-                'data': 'acciones'
-            }
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            buttons
-    });
-    //Fin de la tabla Autor
-    tblEditorial= $('#tblEditorial').DataTable({
-        ajax: {
-            url: base_url + "Editorial/listar",
-            dataSrc: ''
-        },
-        columns: [{
-                'data': 'id'
-            },
-            {
-                'data': 'editorial'
-            },
-            {
-                'data': 'estado'
-            },
-            {
-                'data': 'acciones'
-            }
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            buttons
-    });
-    //Fin de la tabla editorial
-    tblLibros = $('#tblLibros').DataTable({
-        ajax: {
-            url: base_url + "Libros/listar",
-            dataSrc: ''
-        },
-        columns: [{
-                'data': 'id'
-            },
-            {
-                'data': 'titulo'
-            },
-            {
-                'data': 'cantidad'
-            },            
-            {
-                'data': 'autor'
-            },            
-            {
-                'data': 'editorial'
-            },
-	    {
-                'data': 'materia'
-            },
-            {
-                'data': 'foto'
-            },
-            {
-                'data': 'descripcion'
-            },
-            {
-                'data': 'estado'
-            },
-            {
-                'data': 'acciones'
-            }
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-            buttons
-    });
-    //fin Libros
-    tblPrestar = $('#tblPrestar').DataTable({
-        ajax: {
-            url: base_url + "Prestamos/listar",
-            dataSrc: ''
-        },
-        columns: [{
-                'data': 'id'
-            },
-            {
-                'data': 'titulo'
-            },
-            {
-                'data': 'nombre'
-            },
-            {
-                'data': 'fecha_prestamo'
-            },
-
-            {
-                'data': 'fecha_devolucion'
-            },
-            {
-                'data': 'cantidad'
-            },
-            {
-                'data': 'observacion'
-            },
-            {
-                'data': 'estado'
-            },
-            {
-                'data': 'acciones'
-            }
-        ],
-        language,
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        buttons,
-        "resonsieve": true,
-        "bDestroy": true,
-        "iDisplayLength": 10,
-        "order": [
-            [0, "desc"]
-        ]
-    });
+    
+    // DataTables son inicializadas por los módulos específicos (modulos/*.js)
+    // No se inicializan aquí para mantener separación de responsabilidades
+    
     $('.estudiante').select2({
         placeholder: 'Buscar Estudiante',
         minimumInputLength: 2,
@@ -370,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     if (document.getElementById('nombre_estudiante')) {
         const http = new XMLHttpRequest();
-        const url = base_url + 'Configuracion/verificar';
+        const url = base_url + 'Prestamos/verificar';
         http.open("GET", url);
         http.send();
         http.onreadystatechange = function () {
@@ -1287,3 +1078,471 @@ function verificarLibro(e) {
         }
     }
 }
+
+
+function frmProfesores() {
+    document.getElementById("title").textContent = "Nuevo Estuadiante";
+    document.getElementById("btnAccion").textContent = "Registrar";
+    document.getElementById("frmProfesores").reset();
+    document.getElementById("id").value = "";
+    $("#nuevoProfesores").modal("show");
+}
+
+function registrarProfesores(e) {
+    e.preventDefault();
+    const codigo = document.getElementById("codigo");
+    const dni = document.getElementById("dni");
+    const nombre = document.getElementById("nombre");
+    const carrera = document.getElementById("carrera");
+    const telefono = document.getElementById("telefono");
+    const direccion = document.getElementById("direccion");
+    if (codigo.value == "" || dni.value == "" || nombre.value == ""
+    || telefono.value == "" || direccion.value == "" || carrera.value == "") {
+        alertas('Todo los campos son requeridos', 'warning');
+    } else {
+        const url = base_url + "Profesores/registrar";
+        const frm = document.getElementById("frmProfesores");
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(new FormData(frm));
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                const res = JSON.parse(this.responseText);
+                $("#nuevoProfesores").modal("hide");
+                frm.reset();
+                tblProfesores.ajax.reload();
+                alertas(res.msg, res.icono);
+            }
+        }
+    }
+}
+
+function btnEditarPro(id) {
+    document.getElementById("title").textContent = "Actualizar estudiante";
+    document.getElementById("btnAccion").textContent = "Modificar";
+    const url = base_url + "Profesores/editar/" + id;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            document.getElementById("id").value = res.id;
+            document.getElementById("codigo").value = res.codigo;
+            document.getElementById("dni").value = res.dni;
+            document.getElementById("nombre").value = res.nombre;
+            document.getElementById("carrera").value = res.carrera;
+            document.getElementById("telefono").value = res.telefono;
+            document.getElementById("direccion").value = res.direccion;
+            $("#nuevoProfesores").modal("show");
+        }
+    }
+}
+
+function btnEliminarPro(id) {
+    Swal.fire({
+        title: 'Esta seguro de eliminar?',
+        text: "El estudiante no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Profesores/eliminar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblProfesores.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+function btnReingresarPro(id) {
+    Swal.fire({
+        title: 'Esta seguro de reingresar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Profesores/reingresar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblProfesores.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+//Fin Profesores
+
+
+function frmPersonas() {
+    document.getElementById("title").textContent = "Nuevo Estuadiante";
+    document.getElementById("btnAccion").textContent = "Registrar";
+    document.getElementById("frmPersonas").reset();
+    document.getElementById("id").value = "";
+    $("#nuevoPersonas").modal("show");
+}
+
+function registrarPersonas(e) {
+    e.preventDefault();
+    const codigo = document.getElementById("codigo");
+    const dni = document.getElementById("dni");
+    const nombre = document.getElementById("nombre");
+    const carrera = document.getElementById("carrera");
+    const telefono = document.getElementById("telefono");
+    const direccion = document.getElementById("direccion");
+    if (codigo.value == "" || dni.value == "" || nombre.value == ""
+    || telefono.value == "" || direccion.value == "" || carrera.value == "") {
+        alertas('Todo los campos son requeridos', 'warning');
+    } else {
+        const url = base_url + "Personas/registrar";
+        const frm = document.getElementById("frmPersonas");
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(new FormData(frm));
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                const res = JSON.parse(this.responseText);
+                $("#nuevoPersonas").modal("hide");
+                frm.reset();
+                tblPersonas.ajax.reload();
+                alertas(res.msg, res.icono);
+            }
+        }
+    }
+}
+
+function btnEditarPer(id) {
+    document.getElementById("title").textContent = "Actualizar estudiante";
+    document.getElementById("btnAccion").textContent = "Modificar";
+    const url = base_url + "Personas/editar/" + id;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            document.getElementById("id").value = res.id;
+            document.getElementById("codigo").value = res.codigo;
+            document.getElementById("dni").value = res.dni;
+            document.getElementById("nombre").value = res.nombre;
+            document.getElementById("carrera").value = res.carrera;
+            document.getElementById("telefono").value = res.telefono;
+            document.getElementById("direccion").value = res.direccion;
+            $("#nuevoPersonas").modal("show");
+        }
+    }
+}
+
+function btnEliminarPer(id) {
+    Swal.fire({
+        title: 'Esta seguro de eliminar?',
+        text: "El estudiante no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Personas/eliminar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblPersonas.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+function btnReingresarPer(id) {
+    Swal.fire({
+        title: 'Esta seguro de reingresar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Personas/reingresar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblPersonas.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+//Fin Personas
+
+
+function frmProfesores() {
+    document.getElementById("title").textContent = "Nuevo Estuadiante";
+    document.getElementById("btnAccion").textContent = "Registrar";
+    document.getElementById("frmProfesores").reset();
+    document.getElementById("id").value = "";
+    $("#nuevoProfesores").modal("show");
+}
+
+function registrarProfesores(e) {
+    e.preventDefault();
+    const codigo = document.getElementById("codigo");
+    const dni = document.getElementById("dni");
+    const nombre = document.getElementById("nombre");
+    const carrera = document.getElementById("carrera");
+    const telefono = document.getElementById("telefono");
+    const direccion = document.getElementById("direccion");
+    if (codigo.value == "" || dni.value == "" || nombre.value == ""
+    || telefono.value == "" || direccion.value == "" || carrera.value == "") {
+        alertas('Todo los campos son requeridos', 'warning');
+    } else {
+        const url = base_url + "Profesores/registrar";
+        const frm = document.getElementById("frmProfesores");
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(new FormData(frm));
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                const res = JSON.parse(this.responseText);
+                $("#nuevoProfesores").modal("hide");
+                frm.reset();
+                tblProfesores.ajax.reload();
+                alertas(res.msg, res.icono);
+            }
+        }
+    }
+}
+
+function btnEditarPro(id) {
+    document.getElementById("title").textContent = "Actualizar estudiante";
+    document.getElementById("btnAccion").textContent = "Modificar";
+    const url = base_url + "Profesores/editar/" + id;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            document.getElementById("id").value = res.id;
+            document.getElementById("codigo").value = res.codigo;
+            document.getElementById("dni").value = res.dni;
+            document.getElementById("nombre").value = res.nombre;
+            document.getElementById("carrera").value = res.carrera;
+            document.getElementById("telefono").value = res.telefono;
+            document.getElementById("direccion").value = res.direccion;
+            $("#nuevoProfesores").modal("show");
+        }
+    }
+}
+
+function btnEliminarPro(id) {
+    Swal.fire({
+        title: 'Esta seguro de eliminar?',
+        text: "El estudiante no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Profesores/eliminar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblProfesores.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+function btnReingresarPro(id) {
+    Swal.fire({
+        title: 'Esta seguro de reingresar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Profesores/reingresar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblProfesores.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+//Fin Profesores
+
+
+function frmPersonas() {
+    document.getElementById("title").textContent = "Nuevo Estuadiante";
+    document.getElementById("btnAccion").textContent = "Registrar";
+    document.getElementById("frmPersonas").reset();
+    document.getElementById("id").value = "";
+    $("#nuevoPersonas").modal("show");
+}
+
+function registrarPersonas(e) {
+    e.preventDefault();
+    const codigo = document.getElementById("codigo");
+    const dni = document.getElementById("dni");
+    const nombre = document.getElementById("nombre");
+    const carrera = document.getElementById("carrera");
+    const telefono = document.getElementById("telefono");
+    const direccion = document.getElementById("direccion");
+    if (codigo.value == "" || dni.value == "" || nombre.value == ""
+    || telefono.value == "" || direccion.value == "" || carrera.value == "") {
+        alertas('Todo los campos son requeridos', 'warning');
+    } else {
+        const url = base_url + "Personas/registrar";
+        const frm = document.getElementById("frmPersonas");
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(new FormData(frm));
+        http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                const res = JSON.parse(this.responseText);
+                $("#nuevoPersonas").modal("hide");
+                frm.reset();
+                tblPersonas.ajax.reload();
+                alertas(res.msg, res.icono);
+            }
+        }
+    }
+}
+
+function btnEditarPer(id) {
+    document.getElementById("title").textContent = "Actualizar estudiante";
+    document.getElementById("btnAccion").textContent = "Modificar";
+    const url = base_url + "Personas/editar/" + id;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            document.getElementById("id").value = res.id;
+            document.getElementById("codigo").value = res.codigo;
+            document.getElementById("dni").value = res.dni;
+            document.getElementById("nombre").value = res.nombre;
+            document.getElementById("carrera").value = res.carrera;
+            document.getElementById("telefono").value = res.telefono;
+            document.getElementById("direccion").value = res.direccion;
+            $("#nuevoPersonas").modal("show");
+        }
+    }
+}
+
+function btnEliminarPer(id) {
+    Swal.fire({
+        title: 'Esta seguro de eliminar?',
+        text: "El estudiante no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Personas/eliminar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblPersonas.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+function btnReingresarPer(id) {
+    Swal.fire({
+        title: 'Esta seguro de reingresar?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si!',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url = base_url + "Personas/reingresar/" + id;
+            const http = new XMLHttpRequest();
+            http.open("GET", url, true);
+            http.send();
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const res = JSON.parse(this.responseText);
+                    tblPersonas.ajax.reload();
+                    alertas(res.msg, res.icono);
+                }
+            }
+
+        }
+    })
+}
+
+//Fin Personas

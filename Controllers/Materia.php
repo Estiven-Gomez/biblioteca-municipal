@@ -3,13 +3,15 @@ class Materia extends Controller
 {
     public function __construct()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (empty($_SESSION['activo'])) {
             header("location: " . base_url);
         }
         parent::__construct();
         $id_user = $_SESSION['id_usuario'];
-        $perm = $this->model->verificarPermisos($id_user, "Materia");
+        $perm = $this->model->verificarPermisos($id_user, "Materias");
         if (!$perm && $id_user != 1) {
             $this->views->getView($this, "permisos");
             exit;
@@ -23,20 +25,25 @@ class Materia extends Controller
     {
         $data = $this->model->getMaterias();
         for ($i = 0; $i < count($data); $i++) {
+            $id = $data[$i]['id'];
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                $data[$i]['acciones'] = '<div>
-                <button class="btn btn-primary" type="button" onclick="btnEditarMat(' . $data[$i]['id'] . ');"><i class="fa fa-pencil-square-o"></i></button>
-                <button class="btn btn-danger" type="button" onclick="btnEliminarMat(' . $data[$i]['id'] . ');"><i class="fa fa-trash-o"></i></button>
-                <div/>';
+                if ($_SESSION['id_usuario'] == 1) {
+                    $data[$i]['acciones'] = '<button class="btn btn-primary btn-sm" onclick="btnEditarMat(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarMat(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
+                } else {
+                    $data[$i]['acciones'] = '';
+                }
             } else {
                 $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-                $data[$i]['acciones'] = '<div>
-                <button class="btn btn-success" type="button" onclick="btnReingresarMat(' . $data[$i]['id'] . ');"><i class="fa fa-reply-all"></i></button>
-                <div/>';
+                if ($_SESSION['id_usuario'] == 1) {
+                    $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarMat(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
+                } else {
+                    $data[$i]['acciones'] = '';
+                }
             }
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT);
         die();
     }
     public function registrar()

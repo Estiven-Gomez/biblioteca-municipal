@@ -2,36 +2,39 @@
 class Estudiantes extends Controller
 {
     public function __construct() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        parent::__construct();
     }
-    parent::__construct();
-}
     public function index()
     {
         $this->views->getView($this, "index");
     }
     public function listar()
-{
-    $data = $this->model->getEstudiantes();
-    for ($i = 0; $i < count($data); $i++) {
-        if ($data[$i]['estado'] == 1) {
-            $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-            $data[$i]['acciones'] = '<div>
-            <button class="btn btn-primary" type="button" onclick="btnEditarEst(' . $data[$i]['id'] . ');"><i class="fa fa-pencil-square-o"></i></button>
-            <button class="btn btn-danger" type="button" onclick="btnEliminarEst(' . $data[$i]['id'] . ');"><i class="fa fa-trash-o"></i></button>
-            </div>';
-        } else {
-            $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-            $data[$i]['acciones'] = '<div>
-            <button class="btn btn-success" type="button" onclick="btnReingresarEst(' . $data[$i]['id'] . ');"><i class="fa fa-reply-all"></i></button>
-            </div>';
+    {
+        if (isset($_GET['test'])) {
+            header('Content-Type: text/plain');
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
+            print_r($this->model->getEstudiantes());
+            die();
         }
+        $data = $this->model->getEstudiantes();
+        for ($i = 0; $i < count($data); $i++) {
+            $id = $data[$i]['id'];
+            if ($data[$i]['estado'] == 1) {
+                $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
+                $data[$i]['acciones'] = '<button class="btn btn-primary btn-sm" onclick="btnEditarEst(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarEst(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
+            } else {
+                $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
+                $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarEst(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
+            }
+        }
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT);
+        die();
     }
-
-    echo json_encode(["data" => $data], JSON_UNESCAPED_UNICODE);
-    die();
-}
     public function registrar()
     {
         $codigo = strClean($_POST['codigo']);

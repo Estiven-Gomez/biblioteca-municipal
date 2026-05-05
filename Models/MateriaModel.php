@@ -13,8 +13,8 @@ class MateriaModel extends Query
     }
     public function insertarMateria($materia)
     {
-        $verificar = "SELECT * FROM materia WHERE materia = '$materia'";
-        $existe = $this->select($verificar);
+        $verificar = "SELECT * FROM materia WHERE materia = ?";
+        $existe = $this->select($verificar, array($materia));
         if (empty($existe)) {
             $query = "INSERT INTO materia(materia) VALUES (?)";
             $datos = array($materia);
@@ -31,8 +31,8 @@ class MateriaModel extends Query
     }
     public function editMateria($id)
     {
-        $sql = "SELECT * FROM materia WHERE id = $id";
-        $res = $this->select($sql);
+        $sql = "SELECT * FROM materia WHERE id = ?";
+        $res = $this->select($sql, array($id));
         return $res;
     }
     public function actualizarMateria($materia, $id)
@@ -57,8 +57,8 @@ class MateriaModel extends Query
     public function verificarPermisos($id_user, $permiso)
     {
         $tiene = false;
-        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = $id_user AND p.nombre = '$permiso'";
-        $existe = $this->select($sql);
+        $sql = "SELECT p.*, d.* FROM permisos p INNER JOIN detalle_permisos d ON p.id = d.id_permiso WHERE d.id_usuario = ? AND p.nombre = ?";
+        $existe = $this->select($sql, array($id_user, $permiso));
         if ($existe != null || $existe != "") {
             $tiene = true;
         }
@@ -66,8 +66,9 @@ class MateriaModel extends Query
     }
     public function buscarMateria($valor)
     {
-        $sql = "SELECT id, materia AS text FROM materia WHERE materia LIKE '%" . $valor . "%'  AND estado = 1 LIMIT 10";
-        $data = $this->selectAll($sql);
+        $sql = "SELECT id, materia AS text FROM materia WHERE materia LIKE ?  AND estado = 1 LIMIT 10";
+        $datos = array('%'.$valor.'%');
+        $data = $this->selectAll($sql, $datos);
         return $data;
     }
 }

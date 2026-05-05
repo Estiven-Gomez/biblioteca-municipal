@@ -3,7 +3,9 @@ class Configuracion extends Controller
 {
     public function __construct()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         if (empty($_SESSION['activo'])) {
             header("location: " . base_url);
         }
@@ -63,11 +65,14 @@ class Configuracion extends Controller
     {
         $data['libros'] = $this->model->selectDatos('libro');
         $data['materias'] = $this->model->selectDatos('materia');
-        $data['estudiantes'] = $this->model->selectDatos('estudiante');
+        $data['estudiantes'] = $this->model->selectDatosTipo('estudiante', 'Estudiante');
+        $data['profesores'] = $this->model->selectDatosTipo('estudiante', 'Profesor');
+        $data['personas'] = $this->model->selectDatosTipo('estudiante', 'Lector');
         $data['autor'] = $this->model->selectDatos('autor');
         $data['editorial'] = $this->model->selectDatos('editorial');
         $data['prestamos'] = $this->model->selectDatos('prestamo');
         $data['usuarios'] = $this->model->selectDatos('usuarios');
+        $data['noticias'] = $this->model->selectNoticias();
         $this->views->getView($this, "home", $data);
     }
     public function grafico()
@@ -105,32 +110,32 @@ class Configuracion extends Controller
         $pdf->SetMargins(10, 10, 10);
         $pdf->SetTitle("Prestamos");
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(195, 5, utf8_decode($datos['nombre']), 0, 1, 'C');
+        $pdf->Cell(195, 5, mb_convert_encoding($datos['nombre'], 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
 
         $logoPath = $_SERVER['DOCUMENT_ROOT'] . "/biblioteca/Assets/img/logo.png";
         if (file_exists($logoPath)) {
             $pdf->Image($logoPath, 180, 10, 30, 30, 'PNG');
         }
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(20, 5, utf8_decode("Teléfono: "), 0, 0, 'L');
+        $pdf->Cell(20, 5, mb_convert_encoding("Teléfono: ", 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(20, 5, $datos['telefono'], 0, 1, 'L');
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(20, 5, utf8_decode("Dirección: "), 0, 0, 'L');
+        $pdf->Cell(20, 5, mb_convert_encoding("Dirección: ", 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(20, 5, utf8_decode($datos['direccion']), 0, 1, 'L');
+        $pdf->Cell(20, 5, mb_convert_encoding($datos['direccion'], 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(20, 5, "Correo: ", 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(20, 5, utf8_decode($datos['correo']), 0, 1, 'L');
+        $pdf->Cell(20, 5, mb_convert_encoding($datos['correo'], 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
         $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->SetFillColor(0, 0, 0);
         $pdf->SetTextColor(255, 255, 255);
         $pdf->Cell(196, 5, "Detalle de Prestamos", 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Cell(14, 5, utf8_decode('N°'), 1, 0, 'L');
-        $pdf->Cell(50, 5, utf8_decode('Estudiantes'), 1, 0, 'L');
+        $pdf->Cell(14, 5, mb_convert_encoding('N°', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L');
+        $pdf->Cell(50, 5, mb_convert_encoding('Estudiantes', 'ISO-8859-1', 'UTF-8'), 1, 0, 'L');
         $pdf->Cell(87, 5, 'Libros', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Fecha Prestamo', 1, 0, 'L');
         $pdf->Cell(15, 5, 'Cant.', 1, 1, 'L');
@@ -139,7 +144,7 @@ class Configuracion extends Controller
         foreach ($prestamo as $row) {
             $pdf->Cell(14, 5, $contador, 1, 0, 'L');
             $pdf->Cell(50, 5, $row['nombre'], 1, 0, 'L');
-            $pdf->Cell(87, 5, utf8_decode($row['titulo']), 1, 0, 'L');
+            $pdf->Cell(87, 5, mb_convert_encoding($row['titulo'], 'ISO-8859-1', 'UTF-8'), 1, 0, 'L');
             $pdf->Cell(30, 5, $row['fecha_prestamo'], 1, 0, 'L');
             $pdf->Cell(15, 5, $row['cantidad'], 1, 1, 'L');
             $contador++;
