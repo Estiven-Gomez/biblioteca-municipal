@@ -12,19 +12,27 @@ require_once 'Config/App/Controller.php';
 
 require_once 'Controllers/Libros.php';
 
-// Mock the Controller's loadModel behavior
 class MockLibros extends Libros {
     public function __construct() {
         require_once 'Models/LibrosModel.php';
-        $this->model = new LibrosModel();
-        
-        // Mock views
+        $this->model = new class extends LibrosModel {
+            public function verificarPermisos($id_user, $permiso) {
+                return true;
+            }
+        };
         require_once 'Config/App/Views.php';
         $this->views = new Views();
-        
-        parent::__construct();
+        $id_user = $_SESSION['id_usuario'];
+        $perm = $this->model->verificarPermisos($id_user, "Libros");
+        if (!$perm && $id_user != 1) {
+            $this->views->getView($this, "permisos");
+            exit;
+        }
     }
 }
 
 $libros = new MockLibros();
+ob_start();
 $libros->listar();
+$output = ob_get_clean();
+file_put_contents('output_perm.txt', substr($output, 0, 100));

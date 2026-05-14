@@ -3,15 +3,13 @@ class Materia extends Controller
 {
     public function __construct()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start();
         if (empty($_SESSION['activo'])) {
             header("location: " . base_url);
         }
         parent::__construct();
         $id_user = $_SESSION['id_usuario'];
-        $perm = $this->model->verificarPermisos($id_user, "Materias");
+        $perm = $this->model->verificarPermisos($id_user, "Materia");
         if (!$perm && $id_user != 1) {
             $this->views->getView($this, "permisos");
             exit;
@@ -28,18 +26,10 @@ class Materia extends Controller
             $id = $data[$i]['id'];
             if ($data[$i]['estado'] == 1) {
                 $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
-                if ($_SESSION['id_usuario'] == 1) {
-                    $data[$i]['acciones'] = '<button class="btn btn-primary btn-sm" onclick="btnEditarMat(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarMat(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
-                } else {
-                    $data[$i]['acciones'] = '';
-                }
+                $data[$i]['acciones'] = '<button class="btn btn-primary btn-sm" onclick="btnEditarMat(' . $id . ')"><i class="fa fa-pencil-square-o"></i></button> <button class="btn btn-danger btn-sm" onclick="btnEliminarMat(' . $id . ')"><i class="fa fa-trash-o"></i></button>';
             } else {
                 $data[$i]['estado'] = '<span class="badge badge-danger">Inactivo</span>';
-                if ($_SESSION['id_usuario'] == 1) {
-                    $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarMat(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
-                } else {
-                    $data[$i]['acciones'] = '';
-                }
+                $data[$i]['acciones'] = '<button class="btn btn-success btn-sm" onclick="btnReingresarMat(' . $id . ')"><i class="fa fa-reply-all"></i></button>';
             }
         }
         header('Content-Type: application/json; charset=utf-8');

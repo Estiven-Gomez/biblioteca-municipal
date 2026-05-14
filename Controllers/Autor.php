@@ -3,9 +3,7 @@ class Autor extends Controller
 {
     public function __construct()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start();
         if (empty($_SESSION['activo'])) {
             header("location: " . base_url);
         }
@@ -65,7 +63,7 @@ class Autor extends Controller
             } else if (!empty($_POST['foto_actual']) && empty($name)) {
                 $imgNombre = $_POST['foto_actual'];
             } else {
-                $imgNombre = "";
+                $imgNombre = "logo.png";
             }
             if ($id == "") {
                 $data = $this->model->insertarAutor($autor, $imgNombre);

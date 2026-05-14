@@ -2,23 +2,18 @@
 class Prestamos extends Controller
 {
     public function __construct() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        parent::__construct();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
+    parent::__construct();
+}
     public function index()
     {
         $this->views->getView($this, "index");
     }
     public function listar()
     {
-        $id_user = $_SESSION['id_usuario'];
-        if ($id_user == 1) {
-            $data = $this->model->getPrestamos();
-        } else {
-            $data = $this->model->getPrestamosUser($id_user);
-        }
+        $data = $this->model->getPrestamos();
         for ($i = 0; $i < count($data); $i++) {
             $id = $data[$i]['id'];
             if ($data[$i]['estado'] == 1) {
@@ -36,21 +31,11 @@ class Prestamos extends Controller
     public function registrar()
     {
         $libro = strClean($_POST['libro']);
+        $estudiante = strClean($_POST['estudiante']);
         $cantidad = strClean($_POST['cantidad']);
         $fecha_prestamo = strClean($_POST['fecha_prestamo']);
         $fecha_devolucion = strClean($_POST['fecha_devolucion']);
         $observacion = strClean($_POST['observacion']);
-
-        $id_user = $_SESSION['id_usuario'];
-        if ($id_user == 1) {
-            $estudiante = strClean($_POST['estudiante']);
-        } else {
-            $estudiante = $this->model->getEstudianteIdByUsuario($id_user);
-            if (!$estudiante) {
-                echo json_encode(['success' => false, 'message' => 'Error: Perfil de estudiante no enlazado con la sesión'], JSON_UNESCAPED_UNICODE);
-                die();
-            }
-        }
 
         if (empty($libro) || empty($estudiante) || empty($cantidad) || empty($fecha_prestamo) || empty($fecha_devolucion)) {
             $response = ['success' => false, 'message' => 'Todos los campos son requeridos'];
@@ -146,7 +131,7 @@ class Prestamos extends Controller
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(20, 5, $datos['telefono'], 0, 1, 'L');
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(20, 5, mb_convert_encoding("Dirección: ", 'ISO-8859-1', 'UTF-8'), 0, 0, 'L');
+        $pdf->Cell(20, 5, utf8_decode("Dirección: "), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(20, 5, mb_convert_encoding($datos['direccion'], 'ISO-8859-1', 'UTF-8'), 0, 1, 'L');
         $pdf->SetFont('Arial', 'B', 10);

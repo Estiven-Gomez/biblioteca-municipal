@@ -40,7 +40,6 @@
 <script src="<?php echo base_url; ?>Assets/js/chart.min.js" crossorigin="anonymous"></script>
 <script>
     const base_url = "<?php echo base_url; ?>";
-    const isAdmin = <?php echo (isset($_SESSION['id_usuario']) && $_SESSION['id_usuario'] == 1) ? 'true' : 'false'; ?>;
 </script>
 <script src="<?php echo base_url; ?>Assets/js/sweetalert2.all.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url; ?>Assets/js/pdfmake.min.js"></script>
@@ -49,25 +48,25 @@
 <script src="<?php echo base_url; ?>Assets/js/select2.min.js"></script>
 <script src="<?php echo base_url; ?>Assets/js/comun.js"></script>
 <script src="<?php echo base_url; ?>Assets/js/funciones.js"></script>
+<!-- Chatbot Multilingüe Elector -->
+<link rel="stylesheet" href="<?php echo base_url; ?>Assets/css/chatbot.css">
+<script src="<?php echo base_url; ?>Assets/js/chatbot.js"></script>
 <?php
 // Cargar módulo específico basado en el controlador
 $modulos = [
     'Usuarios' => 'modulos/usuarios.js',
     'Estudiantes' => 'modulos/estudiantes.js',
-    'Profesores' => 'modulos/profesores.js',
-    'Personas' => 'modulos/personas.js',
     'Materia' => 'modulos/materias.js',
     'Autor' => 'modulos/autores.js',
     'Editorial' => 'modulos/editoriales.js',
     'Libros' => 'modulos/libros.js',
     'Prestamos' => 'modulos/prestamos.js',
     'Configuracion' => 'modulos/configuracion.js',
-    'Noticias' => 'modulos/noticias.js',
     'Reportes' => 'modulos/reportes.js'
 ];
 
 if (isset($modulos[$controlador])) {
-    echo '<script src="' . base_url . 'Assets/js/' . $modulos[$controlador] . '?v=' . time() . '"></script>' . PHP_EOL;
+    echo '<script src="' . base_url . 'Assets/js/' . $modulos[$controlador] . '"></script>' . PHP_EOL;
 }
 ?>
 

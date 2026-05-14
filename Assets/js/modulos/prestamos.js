@@ -60,12 +60,7 @@ function initTablaPrestamos() {
             dataSrc: ''
         },
         columns: [
-            {
-                'data': null,
-                'render': function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
+            {'data': 'id'},
             {'data': 'titulo'},
             {'data': 'nombre'},
             {'data': 'fecha_prestamo'},
@@ -75,15 +70,10 @@ function initTablaPrestamos() {
             {'data': 'estado'},
             {'data': 'acciones'}
         ],
-        columnDefs: [{
-            "searchable": false,
-            "orderable": false,
-            "targets": 0
-        }],
         responsive: true,
         bDestroy: true,
         iDisplayLength: 10,
-        order: [[1, "asc"]], // Ordenar por titulo
+        order: [[0, "desc"]],
         language,
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -98,8 +88,9 @@ function initTablaPrestamos() {
 function frmPrestar() {
     document.getElementById("title").textContent = "Nuevo Préstamo";
     document.getElementById("btnAccion").textContent = "Registrar";
-    document.getElementById("frmPrestar").reset();
-    $("#prestar").modal("show");
+    document.getElementById("frmPrestamo").reset();
+    document.getElementById("id").value = "";
+    $("#nuevoPrestamo").modal("show");
 }
 
 /**
@@ -111,19 +102,18 @@ function registroPrestamos(e) {
     const libro = document.getElementById("libro");
     const cantidad = document.getElementById("cantidad");
     
-    let estVal = estudiante ? estudiante.value : 'self';
-    if (estVal == "" || libro.value == "" || cantidad.value == "") {
+    if (estudiante.value == "" || libro.value == "" || cantidad.value == "") {
         alertas('Todos los campos son requeridos', 'warning');
     } else {
         const url = base_url + "Prestamos/registrar";
-        const frm = document.getElementById("frmPrestar");
+        const frm = document.getElementById("frmPrestamo");
         const http = new XMLHttpRequest();
         http.open("POST", url, true);
         http.send(new FormData(frm));
         http.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 const res = JSON.parse(this.responseText);
-                $("#prestar").modal("hide");
+                $("#nuevoPrestamo").modal("hide");
                 frm.reset();
                 tblPrestar.ajax.reload();
                 alertas(res.msg, res.icono);

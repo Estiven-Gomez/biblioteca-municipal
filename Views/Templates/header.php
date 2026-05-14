@@ -26,7 +26,7 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url; ?>Assets/css/font-awesome.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@600;800&family=Montserrat:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@600;800&family=Montserrat:wght@400;600;700;800&family=Pacifico&display=swap');
 
         body.app.sidebar-mini {
             font-family: 'Montserrat', sans-serif;
@@ -56,13 +56,11 @@
 
         .app-header__logo {
             background-color: transparent !important;
-            font-family: 'Outfit', sans-serif !important;
-            font-size: 32px !important;
-            font-weight: 800 !important;
-            text-transform: capitalize !important;
-            letter-spacing: 1.5px;
+            font-family: 'Pacifico', cursive !important;
+            font-size: 30px !important;
             color: #fff !important;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.2) !important;
+            letter-spacing: 1px;
+            font-weight: 400 !important;
         }
 
         /* Glassmorphism Sidebar */

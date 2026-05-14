@@ -1,9 +1,9 @@
 <?php
 session_start();
 $_SESSION['activo'] = true;
-$_SESSION['id_usuario'] = 2; // Simulate a non-admin user
-$_SESSION['nombre'] = 'Test';
-$_SESSION['usuario'] = 'test';
+$_SESSION['id_usuario'] = 1; // Admin user
+$_SESSION['nombre'] = 'Admin';
+$_SESSION['usuario'] = 'admin';
 
 require_once 'Config/Config.php';
 require_once 'Config/App/Conexion.php';
@@ -12,13 +12,11 @@ require_once 'Config/App/Controller.php';
 
 require_once 'Controllers/Libros.php';
 
-// Mock the Controller's loadModel behavior
-class MockLibros extends Libros {
+class MockLibrosAdmin extends Libros {
     public function __construct() {
         require_once 'Models/LibrosModel.php';
         $this->model = new LibrosModel();
         
-        // Mock views
         require_once 'Config/App/Views.php';
         $this->views = new Views();
         
@@ -26,5 +24,5 @@ class MockLibros extends Libros {
     }
 }
 
-$libros = new MockLibros();
+$libros = new MockLibrosAdmin();
 $libros->listar();

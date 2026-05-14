@@ -2,24 +2,17 @@
 class Estudiantes extends Controller
 {
     public function __construct() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        parent::__construct();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
+    parent::__construct();
+}
     public function index()
     {
         $this->views->getView($this, "index");
     }
     public function listar()
     {
-        if (isset($_GET['test'])) {
-            header('Content-Type: text/plain');
-            ini_set('display_errors', 1);
-            error_reporting(E_ALL);
-            print_r($this->model->getEstudiantes());
-            die();
-        }
         $data = $this->model->getEstudiantes();
         for ($i = 0; $i < count($data); $i++) {
             $id = $data[$i]['id'];

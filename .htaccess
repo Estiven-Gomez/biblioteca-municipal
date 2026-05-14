@@ -1,4 +1,7 @@
 
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .php .js .css .html
+
 RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-d

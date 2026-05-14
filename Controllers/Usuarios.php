@@ -79,9 +79,6 @@ class Usuarios extends Controller{
             die();
         }
         $hash = password_hash($clave, PASSWORD_BCRYPT);
-        // Capturar rol si el form lo envía, si no es admin normal u otro
-        $rol = isset($_POST['rol_registro']) ? strClean($_POST['rol_registro']) : 'Lector';
-
         if (empty($usuario) || empty($nombre)) {
             $msg = array('msg' => 'Todo los campos son requeridos', 'icono' => 'warning');
         }else{
@@ -90,7 +87,7 @@ class Usuarios extends Controller{
                     if ($clave != $confirmar) {
                         $msg = array('msg' => 'La contraseña es requerido', 'icono' => 'warning');
                     } else {
-                        $data = $this->model->registrarUsuario($usuario, $nombre, $hash, $rol);
+                        $data = $this->model->registrarUsuario($usuario, $nombre, $hash);
                         if ($data == "ok") {
                             $msg = array('msg' => 'Usuario registrado', 'icono' => 'success');
                         } else if ($data == "existe") {
