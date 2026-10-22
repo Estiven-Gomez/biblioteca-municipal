@@ -1,4 +1,7 @@
-<?php include "Views/Templates/header.php"; ?>
+<?php
+$dashboardHome = true;
+include "Views/Templates/header.php";
+?>
 <div class="app-title">
     <div>
         <h1><i class="fa fa-dashboard"></i> Panel de Inicio</h1>

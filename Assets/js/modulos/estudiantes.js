@@ -62,12 +62,7 @@ function initTablaEstudiantes() {
             dataSrc: ''
         },
         columns: [
-                        {
-                'data': null,
-                'render': function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
+            {'data': 'id'},
             {'data': 'codigo'},
             {'data': 'dni'},
             {'data': 'nombre'},

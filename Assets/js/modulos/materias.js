@@ -62,12 +62,7 @@ function initTablaMaterias() {
             dataSrc: ''
         },
         columns: [
-                        {
-                'data': null,
-                'render': function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
+            {'data': 'id'},
             {'data': 'materia'},
             {'data': 'estado'},
             {'data': 'acciones'}
@@ -80,7 +75,7 @@ function initTablaMaterias() {
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        buttons: isAdmin ? buttons : []
+        buttons
     });
 }
 

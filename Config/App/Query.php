@@ -21,7 +21,6 @@ class Query extends Conexion{
     public function selectAll(string $sql, array $datos = [])
     {
         $this->sql = $sql;
-        if (isset($_GET['test'])) { echo "EXACT QUERY: |" . $sql . "|\n"; }
         $resul = $this->con->prepare($this->sql);
         if (!empty($datos)) {
             foreach ($datos as $key => $value) {

@@ -48,9 +48,6 @@
 <script src="<?php echo base_url; ?>Assets/js/select2.min.js"></script>
 <script src="<?php echo base_url; ?>Assets/js/comun.js"></script>
 <script src="<?php echo base_url; ?>Assets/js/funciones.js"></script>
-<!-- Chatbot Multilingüe Elector -->
-<link rel="stylesheet" href="<?php echo base_url; ?>Assets/css/chatbot.css">
-<script src="<?php echo base_url; ?>Assets/js/chatbot.js"></script>
 <?php
 // Cargar módulo específico basado en el controlador
 $modulos = [

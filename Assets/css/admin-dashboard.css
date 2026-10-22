@@ -1,0 +1,329 @@
+html {
+    min-height: 100%;
+    background-color: #edf5fc;
+}
+
+body.admin-theme {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    background-color: transparent;
+    color: #1b2938;
+}
+
+body.admin-theme::before {
+    position: fixed;
+    z-index: -1;
+    inset: -10px;
+    background-image: linear-gradient(rgba(20, 48, 82, .22), rgba(20, 48, 82, .22)), url('../img/login-bg.png');
+    background-position: center;
+    background-size: cover;
+    content: '';
+    filter: blur(4px);
+    pointer-events: none;
+}
+
+.admin-theme .app-header {
+    background-color: #4da6ff;
+}
+
+.admin-theme .app-header__logo,
+.admin-theme .app-header__logo:hover,
+.admin-theme .app-header__logo:focus {
+    background-color: #327fc6;
+    color: #fff;
+}
+
+.admin-theme .app-sidebar {
+    background-color: #23558a;
+}
+
+.admin-theme .app-sidebar__home {
+    display: inline-flex;
+    flex: 0 0 auto;
+    border-radius: 50%;
+}
+
+.admin-theme .app-sidebar__home:focus-visible {
+    outline: 3px solid #9ccfff;
+    outline-offset: 3px;
+}
+
+.admin-theme .app-menu__item.active,
+.admin-theme .app-menu__item:hover,
+.admin-theme .app-menu__item:focus,
+.admin-theme .treeview.is-expanded [data-toggle='treeview'],
+.admin-theme .treeview-item.active,
+.admin-theme .treeview-item:hover,
+.admin-theme .treeview-item:focus {
+    border-left-color: #9ccfff;
+    background-color: #173f69;
+}
+
+.admin-theme .treeview-menu {
+    background-color: #1d4975;
+}
+
+.admin-theme .app-content {
+    background-color: rgba(237, 245, 252, .62);
+}
+
+.admin-theme .app-title {
+    background-color: rgba(255, 255, 255, .94);
+    border-bottom: 1px solid #dce8f2;
+}
+
+.admin-theme .app-title h1,
+.admin-theme .tile-title {
+    color: #23558a;
+}
+
+.admin-theme .widget-small {
+    overflow: hidden;
+    border: 1px solid #dce8f2;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #23558a;
+    box-shadow: 0 4px 14px rgba(35, 85, 138, .08);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.admin-theme .widget-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(35, 85, 138, .14);
+}
+
+.admin-theme .widget-small.primary.coloured-icon .icon {
+    background-color: #4da6ff;
+    color: #fff;
+}
+
+.admin-theme .widget-small.info.coloured-icon .icon {
+    background-color: #5fa8d3;
+    color: #fff;
+}
+
+.admin-theme .widget-small.warning.coloured-icon .icon {
+    background-color: #9ccfff;
+    color: #23558a;
+}
+
+.admin-theme .widget-small.danger.coloured-icon .icon {
+    background-color: #23558a;
+    color: #fff;
+}
+
+.admin-theme .widget-small .info {
+    color: #23558a;
+    text-decoration: none;
+}
+
+.admin-theme .widget-small .info:hover,
+.admin-theme .widget-small .info:focus {
+    color: #327fc6;
+    text-decoration: none;
+}
+
+.admin-theme .tile {
+    border: 1px solid #dce8f2;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, .94);
+    box-shadow: 0 4px 14px rgba(35, 85, 138, .08);
+}
+
+.admin-theme .btn-primary,
+.admin-theme .btn-info,
+.admin-theme .btn-success {
+    border-color: #4da6ff;
+    background-color: #4da6ff;
+    color: #fff;
+}
+
+.admin-theme .btn-primary:hover,
+.admin-theme .btn-info:hover,
+.admin-theme .btn-success:hover {
+    border-color: #327fc6;
+    background-color: #327fc6;
+    color: #fff;
+}
+
+.admin-theme .btn-primary:focus,
+.admin-theme .btn-info:focus,
+.admin-theme .btn-success:focus {
+    box-shadow: 0 0 0 .2rem rgba(77, 166, 255, .35);
+}
+
+.admin-theme .btn-warning {
+    border-color: #9ccfff;
+    background-color: #9ccfff;
+    color: #173f69;
+}
+
+.admin-theme .btn-warning:hover {
+    border-color: #7bb9f0;
+    background-color: #7bb9f0;
+    color: #173f69;
+}
+
+.admin-theme .dt-buttons > .btn-secondary {
+    border-color: #4da6ff;
+    background-color: #4da6ff;
+    color: #fff;
+}
+
+.admin-theme .dt-buttons > .btn-secondary:hover {
+    border-color: #327fc6;
+    background-color: #327fc6;
+}
+
+.admin-theme .app-content .table thead th,
+.admin-theme .app-content .table-dark th {
+    border-color: #327fc6;
+    background-color: #23558a;
+    color: #fff;
+}
+
+.admin-theme .page-item.active .page-link {
+    border-color: #4da6ff;
+    background-color: #4da6ff;
+}
+
+.admin-theme .page-link {
+    color: #327fc6;
+}
+
+.admin-theme .page-link:hover {
+    color: #23558a;
+}
+
+@media (min-width: 768px) {
+    .admin-theme.sidebar-mini.sidenav-toggled .app-sidebar {
+        left: 0;
+        width: 50px;
+        overflow: visible;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-content {
+        margin-left: 50px;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item {
+        position: relative;
+        justify-content: center;
+        width: calc(100% - 12px);
+        height: 46px;
+        margin: 4px 6px;
+        padding: 0;
+        overflow: visible;
+        border-left: 0;
+        border-radius: 12px;
+        background: transparent;
+        color: #fff;
+        isolation: isolate;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item::before {
+        position: absolute;
+        z-index: -1;
+        inset: 4px;
+        border-radius: 12px;
+        background: #4da6ff;
+        content: '';
+        opacity: 0;
+        transform: scale(.72);
+        transition: opacity .18s ease, transform .32s cubic-bezier(.2, 1.6, .4, 1);
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item:hover::before,
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item:focus-visible::before,
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item.active::before,
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview.is-expanded > .app-menu__item::before {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item:hover,
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item:focus-visible,
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item.active,
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview.is-expanded > .app-menu__item {
+        border-left-color: transparent;
+        background: transparent;
+        color: #fff;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__icon {
+        position: relative;
+        z-index: 1;
+        width: 25px;
+        margin: 0;
+        text-align: center;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__label {
+        top: 50%;
+        left: calc(100% + 10px);
+        width: max-content;
+        min-width: 0;
+        margin: 0;
+        padding: 12px 16px;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 8px 22px rgba(17, 48, 82, .2);
+        color: #23558a;
+        line-height: 1.2;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-7px, -50%) scale(.96);
+        transform-origin: left center;
+        transition: opacity .18s ease, transform .24s cubic-bezier(.2, 1.4, .4, 1), visibility .18s ease;
+        visibility: hidden;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item:hover .app-menu__label,
+    .admin-theme.sidebar-mini.sidenav-toggled .app-menu__item:focus-visible .app-menu__label,
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview:hover > .app-menu__item .app-menu__label,
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview:focus-within > .app-menu__item .app-menu__label {
+        opacity: 1;
+        transform: translate(0, -50%) scale(1);
+        visibility: visible;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview:hover > .app-menu__item,
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview:focus-within > .app-menu__item {
+        overflow: visible;
+        border-left-color: transparent;
+        background: transparent;
+        color: #fff;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview-menu {
+        left: 60px;
+        padding: 8px;
+        border-radius: 10px;
+        background: #23558a;
+        box-shadow: 0 8px 22px rgba(17, 48, 82, .24);
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview-item {
+        min-height: 38px;
+        padding: 9px 12px;
+        border-radius: 7px;
+    }
+
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview-item:hover,
+    .admin-theme.sidebar-mini.sidenav-toggled .treeview-item:focus {
+        background: #4da6ff;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-theme .widget-small {
+        transition: none;
+    }
+
+    .admin-theme .app-menu__item,
+    .admin-theme .app-menu__item::before,
+    .admin-theme .app-menu__label {
+        transition: none !important;
+    }
+}

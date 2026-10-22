@@ -10,6 +10,10 @@ class Home extends Controller
     }
     public function index()
     {
+        $this->views->getView($this, "landing");
+    }
+    public function login()
+    {
         $this->views->getView($this, "index");
     }
     

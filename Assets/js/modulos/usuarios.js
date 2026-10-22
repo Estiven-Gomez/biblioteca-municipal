@@ -66,12 +66,7 @@ function initTablaUsuarios() {
             dataSrc: ''
         },
         columns: [
-                        {
-                'data': null,
-                'render': function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
+            {'data' : 'id'},
             {'data': 'usuario'},
             {'data': 'nombre'},
             {'data': 'estado'},

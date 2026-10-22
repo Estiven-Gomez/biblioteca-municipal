@@ -62,12 +62,7 @@ function initTablaAutores() {
             dataSrc: ''
         },
         columns: [
-                        {
-                'data': null,
-                'render': function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
+            {'data': 'id'},
             {'data': 'imagen'},
             {'data': 'autor'},
             {'data': 'estado'},
